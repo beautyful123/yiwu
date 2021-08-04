@@ -1,0 +1,48 @@
+.form_header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 92px;
+  line-height: 44px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #007DFF;
+  font-family: PingFangSC-Medium, PingFang SC;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.1);
+}
+.conteiner{
+  margin: 0 50px;
+}
+.form_title{
+  margin-top: 63px;
+  height: 42px;
+  border-bottom: 1px solid #E9ECF0;;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #202D40;
+}
+.title_blue{
+  float: left;
+  margin: 2px 0 0 10px;
+  width: 4px;
+  height: 18px;
+  background: #007DFF;
+}
+.title_name{
+  float: left;
+  margin-left: 8px;
+  height: 22px;
+  line-height: 22px;
+}
+.form_main{
+  margin: 33px;
+}
+/* 修改element-ui样式 */
+.el-input-number{
+  width: 100%!important;
+}
+.el-input-number .el-input__inner{
+  text-align: left!important;
+}
