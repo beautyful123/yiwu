@@ -46,3 +46,45 @@
 .el-input-number .el-input__inner{
   text-align: left!important;
 }
+.el-form-item__content{
+  width: 100%!important;
+}
+.el-form-item__label{
+  text-align: center!important;
+}
+/* .el-form-item__label::after{
+  display: inline-block;
+  width: 0;
+  height: 0;
+  clear: both;
+} */
+.el-form-item__content{
+  float: left;
+}
+.form_footer{
+  height: 88px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: PingFangSC-Medium, PingFang SC;
+  background: #FFFFFF;
+  box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.1);
+}
+.footer_container{
+  float: right;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.footer_container button{
+  margin-right: 20px;
+  padding: 0;
+  width: 136px;
+  height: 40px;
+  line-height: 40px;
+}
+/* .footer_container button.primary{
+  background: #007DFF;
+  color: #FFFFFF;
+} */

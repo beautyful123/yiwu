@@ -20,6 +20,7 @@
       义乌自由贸易试验区数据集成平台-数据录入
     </header>
     <main class="conteiner">
+      <!-- 顶部数据 -->
       <div>
         <div class="form_title">
           <span class="title_blue"></span>
@@ -28,7 +29,14 @@
         <div class="form_main">
           <el-form>
             <el-row :gutter="70">
-              <el-col :span="8">
+              <el-col :span="8" v-for="(item,i) in 7" :key="i">
+                <el-form-item
+                label="季度地区生产总值（亿元）"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <!-- <el-col :span="8">
                 <el-form-item
                 label="季度地区生产总值（亿元）"
                 >
@@ -37,29 +45,32 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="税收收入（亿元）"
+                  label="税收收入（亿元）"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="跨境人民币结算量（亿元）"
                 >
-                <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
               </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item
-              label="跨境人民币结算量（亿元）"
-              >
-                <el-input-number :controls="false" placeholder="请输入"></el-input-number >
-            </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item
-              label="国际商贸城当前人流（人）"
-              >
-                <el-input-number :controls="false" placeholder="请输入"></el-input-number >
-              </el-form-item>
-            </el-col>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="国际商贸城当前人流（人）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col> -->
             </el-row>
           </el-form>
         </div>
       </div>
+      <!-- 地区生产总值（亿元） -->
       <div>
         <div class="form_title">
           <span class="title_blue"></span>
@@ -70,7 +81,65 @@
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="第一组"
+                  label="第一组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第二组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第三组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="第四组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第五组"
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
@@ -86,7 +155,371 @@
           </el-form>
         </div>
       </div>
+      <!-- 全市企业相关指标 -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">全市企业相关指标</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="新设立企业数（家）"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="新增内资企业注册资本（万元）"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="期末实有企业注册资本（万元）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+              </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="新设立内资企业数（家）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="新设立外商企业数（家）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="期末实有企业数（家）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="期末内资企业数（家）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>  
+      <!-- 跨境人民币结算（亿元） -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">跨境人民币结算（亿元）</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="第一组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第二组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第三组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="第四组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第五组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
+      <!-- 金融服务 -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">金融服务</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="人民币存款余额（亿元）"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="人民币贷款余额（亿元）"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
+      <!-- 投资贸易 -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">投资贸易</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="固定资产投资增速（%）)"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="进出口总额（亿元）)"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="进口总额（亿元）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+              </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
+      <!-- 国际航运物流枢纽 -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">国际航运物流枢纽</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                label="航空货物量（万吨）)"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="“义新欧”班列开行数（列）)"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
+      <!-- 快递业务量（亿件） -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">快递业务量（亿件）</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="第一组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第二组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第三组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="第四组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="第五组"
+                >
+                  <el-row :gutter="20">
+                    <el-col :span="8">
+                      <el-select></el-select>
+                    </el-col>
+                    <el-col :span="16">
+                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
+      <!-- 新型国际贸易中心 -->
+      <div>
+        <div class="form_title">
+          <span class="title_blue"></span>
+          <h3 class="title_name">新型国际贸易中心</h3>
+        </div>
+        <div class="form_main">
+          <el-form>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="eWTP全球布局国家和地区（个)"
+                >
+                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                  label="市场采购贸易额（亿元)"
+                  >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item
+                label="外贸综合服务企业出口额（亿元）"
+                >
+                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+              </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+        </div>
+      </div>
     </main>
+    <footer class="form_footer">
+      <div class="footer_container">
+        <el-button>重置</el-button>
+        <el-button type="primary">提交</el-button>
+      </div>
+    </footer>
   </div>
   <script type="text/babel">
     const vm = new Vue({
