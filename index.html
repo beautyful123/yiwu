@@ -10,9 +10,24 @@
   <link rel="stylesheet" href="./index.css">
   <!-- 引入样式 -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    Vue.directive('loadmore', {
+      bind (el, binding) {
+        // 获取element-ui定义好的scroll盒子
+        const SELECTWRAP_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
+        SELECTWRAP_DOM.addEventListener('scroll', function () {
+          
+          const CONDITION = this.scrollHeight - this.scrollTop <= this.clientHeight
+          if (CONDITION) {
+            binding.value()
+          }
+        })
+      }
+    })
+  </script>
 </head>
 <body>
   <div id="app">
@@ -27,34 +42,53 @@
           <h3 class="title_name">顶部数据</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form"
+            :model="form"
+            :rules="formRules"
+          >
             <el-row :gutter="70">
-              <el-col :span="8" v-for="(item,i) in 7" :key="i">
+              <!-- <el-col :span="8" v-for="(item,i) in 7" :key="i">
                 <el-form-item
                 label="季度地区生产总值（亿元）"
                 >
                   <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
                 </el-form-item>
-              </el-col>
-              <!-- <el-col :span="8">
+              </el-col> -->
+              <el-col :span="8">
                 <el-form-item
-                label="季度地区生产总值（亿元）"
+                  label="季度地区生产总值（亿元）"
+                  prop="regional_gdp"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form.regional_gdp"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
                   label="税收收入（亿元）"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="tax_revenue"
+                > 
+                  <el-input-number
+                    v-model="form.tax_revenue"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="跨境人民币结算量（亿元）"
+                  label="跨境人民币结算量（亿元）"
+                  prop="cross_border_settlement"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                <el-input-number
+                  v-model="form.cross_border_settlement"
+                  :controls="false"
+                  placeholder="请输入"
+                ></el-input-number >
               </el-form-item>
               </el-col>
             </el-row>
@@ -63,9 +97,13 @@
                 <el-form-item
                 label="国际商贸城当前人流（人）"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form.cross_border_settlement"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
-              </el-col> -->
+              </el-col>
             </el-row>
           </el-form>
         </div>
@@ -77,7 +115,11 @@
           <h3 class="title_name">地区生产总值（亿元）</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form1"
+            :model="form1"
+            :rules="form1Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
@@ -85,10 +127,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form1FirstDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form1[0].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form1FirstValue"
+                      >
+                        <el-input-number
+                          v-model="form1[0].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -99,10 +164,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form1SecondDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form1[1].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form1SecondValue"
+                      >
+                        <el-input-number
+                          v-model="form1[1].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -113,10 +201,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form1ThirdDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form1[2].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form1ThirdValue"
+                      >
+                        <el-input-number
+                          v-model="form1[2].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -129,10 +240,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form1FourchDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form1[3].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form1FourchValue"
+                      >
+                        <el-input-number
+                          v-model="form1[3].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -143,10 +277,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form1FifthDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form1[4].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form1FifthValue"
+                      >
+                        <el-input-number
+                          v-model="form1[4].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -162,59 +319,98 @@
           <h3 class="title_name">全市企业相关指标</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form2"
+            :model="form2"
+            :rules="form2Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="新设立企业数（家）"
+                  label="新设立企业数（家）"
+                  prop="new_enterprise_num"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form2.new_enterprise_num"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
                   label="新增内资企业注册资本（万元）"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="new_enterprise_domestic_capital"
+                >
+                  <el-input-number
+                  v-model="form2.new_enterprise_domestic_capital"
+                  :controls="false"
+                  placeholder="请输入"
+                ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="期末实有企业注册资本（万元）"
+                  label="期末实有企业注册资本（万元）"
+                  prop="final_actual_enterprise_domestic_capital"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form2.final_actual_enterprise_domestic_capital"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
               </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="新设立内资企业数（家）"
+                  label="新设立内资企业数（家）"
+                  prop="new_enterprise_num_domestic"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                  v-model="form2.new_enterprise_num_domestic"
+                  :controls="false"
+                  placeholder="请输入"
+                ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="新设立外商企业数（家）"
+                  label="新设立外商企业数（家）"
+                  prop="new_enterprise_num_foreign"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form2.new_enterprise_num_foreign"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="期末实有企业数（家）"
+                  label="期末实有企业数（家）"
+                  prop="final_actual_enterprise_num"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form2.final_actual_enterprise_num"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="期末内资企业数（家）"
+                  label="期末内资企业数（家）"
+                  prop="final_actual_enterprise_num_domestic"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form2.final_actual_enterprise_num_domestic"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
             </el-row>
@@ -228,7 +424,11 @@
           <h3 class="title_name">跨境人民币结算（亿元）</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form3"
+            :model="form3"
+            :rules="form3Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
@@ -236,10 +436,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form3FirstDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form3[0].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form3FirstValue"
+                      >
+                        <el-input-number
+                          v-model="form3[0].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -250,10 +473,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form3SecondDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form3[1].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form3SecondValue"
+                      >
+                        <el-input-number
+                          v-model="form3[1].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -264,10 +510,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form3ThirdDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form3[2].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form3ThirdValue"
+                      >
+                        <el-input-number
+                          v-model="form3[2].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -280,10 +549,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form3FourchDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form3[3].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form3FourchValue"
+                      >
+                        <el-input-number
+                          v-model="form3[3].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -294,10 +586,33 @@
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-from-item
+                        prop="form3FifthDate"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form3[4].date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-from-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="form3FifthValue"
+                      >
+                        <el-input-number
+                          v-model="form3[4].value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -313,20 +628,34 @@
           <h3 class="title_name">金融服务</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form4"
+            :model="form4"
+            :rules="form4Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="人民币存款余额（亿元）"
+                  label="人民币存款余额（亿元）"
+                  prop="rmb_deposit_balance"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form4.rmb_deposit_balance"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
                   label="人民币贷款余额（亿元）"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="rmb_loan_balance"
+                >
+                  <el-input-number
+                    v-model="form4.rmb_loan_balance"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
             </el-row>
@@ -340,28 +669,61 @@
           <h3 class="title_name">投资贸易</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form5"
+            :model="form5"
+            :rules="form5Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="固定资产投资增速（%）)"
+                  label="固定资产投资增速（%）)"
+                  prop="fixed_asset_investment_increase"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form5.fixed_asset_investment_increase"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
                   label="进出口总额（亿元）)"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="imports_exports_total"
+                >
+                  <el-input-number
+                    v-model="form.imports_exports_total"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="进口总额（亿元）"
+                  label="进口总额（亿元）"
+                  prop="imports_total"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
-              </el-form-item>
+                  <el-input-number
+                    v-model="form.imports_total"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="70">
+              <el-col :span="8">
+                <el-form-item
+                  label="出口总额（亿元）"
+                  prop="exports_total"
+                >
+                  <el-input-number
+                    v-model="form.exports_total"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
+                </el-form-item>
               </el-col>
             </el-row>
           </el-form>
@@ -374,13 +736,22 @@
           <h3 class="title_name">国际航运物流枢纽</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form6"
+            :model="form6"
+            :rules="form6Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
-                label="航空货物量（万吨）)"
+                  label="航空货物量（万吨）)"
+                  prop="air_cargo_volume"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form6.air_cargo_volume"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -517,16 +888,84 @@
     <footer class="form_footer">
       <div class="footer_container">
         <el-button>重置</el-button>
-        <el-button type="primary">提交</el-button>
+        <el-button @click="submit" type="primary">提交</el-button>
       </div>
     </footer>
   </div>
   <script type="text/babel">
-    const vm = new Vue({
+    window.vm = new Vue({
       name: '',
       data() {
         return {
-          name: 'ylw'
+          form: {
+            regional_gdp:undefined,
+            tax_revenue:undefined,
+            cross_border_settlement:undefined
+          },
+          form1:[
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+          ],
+          form2:{},
+          form3:[
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+            {date: 2015},
+          ],
+          formRules:{
+            regional_gdp:[
+              {required: true, message: '请输入季度地区生产总值', trigger: 'blur' }
+            ],
+            tax_revenue: [
+              {required: true, message: '请输入税收收入', trigger: 'blur' },
+            ],
+            cross_border_settlement: {
+              required: true, message: '请输入跨境人民币结算量', trigger: 'blur' 
+            }
+          },
+          form1Rules:{
+            form1FirstDate: [
+              {required: true, message: '请输入日期', trigger: 'blur' }
+            ],
+            form1FirstValue: [
+              {required: true, message: '请输入地区生产总值', trigger: 'blur' }
+            ]
+          },
+          list: [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
+        }
+      },
+      methods:{
+        // 下拉触底事件
+        loadMore() {
+          this.addList(10)
+        },
+        // 更新日期
+        addList(step) {
+          let last = this.list[this.list.length-1]
+          for(let i = last+1;i<=last+10;i++) {
+            this.list.push(i)
+          }
+        },
+        // 提交
+        submit() {
+          this.$refs.form.validate((val) => {
+            if(val) {
+              // 通过
+            } else {
+
+            }
+          })
+          this.$refs.form1.validate(val => {
+            if(val) {
+            } else {
+
+            }
+          })
         }
       }
     }).$mount("#app")

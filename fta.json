@@ -1,0 +1,103 @@
+{
+//顶部数据
+"regional_gdp": "378.40", //地区生产总值
+"tax_revenue": "51.47",   //税收收入
+"cross_border_settlement": "44.96", //跨境人民币结算
+
+//全市企业相关指标
+"new_enterprise_num": 5884, //新设立企业数
+"new_enterprise_num_domestic": 5774,    //新设立内资企业数
+"new_enterprise_domestic_capital": "1054500.00", //新增内资企业注册资本
+"new_enterprise_num_foreign": 110,  //新设立外商投资企业数
+"final_actual_enterprise_domestic_capital": "61108000.00", //期末实有内资企业注册资本
+"final_actual_enterprise_num": 217700,  //期末实有企业数
+"final_actual_enterprise_num_domestic": 209544, //期末实有内资企业数
+"final_actual_enterprise_num_foreign": 8156,    //期末实有外商投资企业数
+
+//金融服务
+"rmb_deposit_balance": "3512.78",   //人民币存款余额
+"rmb_loan_balance": "3741.71",      //人民币贷款余额
+
+//投资贸易
+"fixed_asset_investment_increase": "21.40", //固定资产投资增速
+"imports_exports_total": "498.69",  //进出口总额
+"imports_total": "22.98",   //进口总额
+"exports_total": "475.72",  //出口总额
+
+//国际航运和物流枢纽
+"air_cargo_volume": "0.16590",  //航空货物量
+"train_lines_num": 219,     //义新欧班列开行数
+//新型国际贸易中心
+"ewtp_global_layout_num": 4,   //eWTP全球布局国家和地区 
+"trade_market_purchases": "379.20", //市场采购贸易额
+"foreign_trade_exports": "10.01",//外贸综合服务企业出口额
+//地区生产总值
+"gdp": [
+{
+"date": "2021-01-01 00:00:00",
+"value": "1585.00"
+},
+{
+"date": "2020-01-01 00:00:00",
+"value": "1485.60"
+},
+{
+"date": "2019-01-01 00:00:00",
+"value": "1421.14"
+},
+{
+"date": "2018-01-01 00:00:00",
+"value": "1248.10"
+},
+{
+"date": "2017-01-01 00:00:00",
+"value": "1158.00"
+}
+],
+//跨境人民币结算
+"settlement": [
+{
+"date": "2021-01-01 00:00:00",
+"value": "350.00"
+},
+{
+"date": "2020-01-01 00:00:00",
+"value": "188.70"
+},
+{
+"date": "2019-01-01 00:00:00",
+"value": "86.40"
+},
+{
+"date": "2018-01-01 00:00:00",
+"value": "37.70"
+},
+{
+"date": "2017-01-01 00:00:00",
+"value": "31.63"
+}
+],
+//快递业务量
+"express": [
+{
+"date": "2021-01-01 00:00:00",
+"value": "85.00"
+},
+{
+"date": "2020-01-01 00:00:00",
+"value": "71.75"
+},
+{
+"date": "2019-01-01 00:00:00",
+"value": "47.34"
+},
+{
+"date": "2018-01-01 00:00:00",
+"value": "27.57"
+},
+{
+"date": "2017-01-01 00:00:00",
+"value": "18.25"
+}
+]
+}
