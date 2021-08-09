@@ -1020,6 +1020,7 @@
   <script src="./src/browser.min.js"></script>
   <script src="./src/es6-promise.min.js"></script>
   <script>
+    // ie兼容
     ES6Promise.polyfill()
   </script>
   <script type="text/babel">
@@ -1034,11 +1035,7 @@
           return {required: true, message: "请输入"+val, trigger: 'blur' }
         }
         return {
-          form: {
-            regional_gdp:undefined,
-            tax_revenue:undefined,
-            cross_border_settlement:undefined
-          },
+          form: {},
           form1: {
             one:{date: 2015},
             two:{date: 2015},
@@ -1225,11 +1222,11 @@
           if(flag) {
             let params = this.sendInfo();
             // 调接口
-            let url= 'http://localhost:8080/test'
-            axios.get(url, {
-                params: {
-                  name:"测试时啊测试撒"
-                }
+            let url= 'http://localhost:8080/post1'
+            axios({
+              method:'post',
+              url,
+              data: params
             }).then(val => {
               this.$message({
                 type: "success",
