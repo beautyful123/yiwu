@@ -4,30 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>义乌自由贸易试验区数据集成平台-数据录入</title>
   <style link></style>
-  <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="./src/reset.css">
+  <link rel="stylesheet" href="./src/index.css">
+  <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
   <!-- 引入样式 -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <!-- 引入组件库 -->
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-  <script>
-    Vue.directive('loadmore', {
-      bind (el, binding) {
-        // 获取element-ui定义好的scroll盒子
-        const SELECTWRAP_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
-        SELECTWRAP_DOM.addEventListener('scroll', function () {
-          
-          const CONDITION = this.scrollHeight - this.scrollTop <= this.clientHeight
-          if (CONDITION) {
-            binding.value()
-          }
-        })
-      }
-    })
-  </script>
+  <script type="text/babel" src="./src/loadmore.js"></script>
+  <script src="./src/axios.min.js"></script>
 </head>
 <body>
   <div id="app">
@@ -48,13 +35,6 @@
             :rules="formRules"
           >
             <el-row :gutter="70">
-              <!-- <el-col :span="8" v-for="(item,i) in 7" :key="i">
-                <el-form-item
-                label="季度地区生产总值（亿元）"
-                >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
-                </el-form-item>
-              </el-col> -->
               <el-col :span="8">
                 <el-form-item
                   label="季度地区生产总值（亿元）"
@@ -92,19 +72,6 @@
               </el-form-item>
               </el-col>
             </el-row>
-            <el-row :gutter="70">
-              <el-col :span="8">
-                <el-form-item
-                label="国际商贸城当前人流（人）"
-                >
-                  <el-input-number
-                    v-model="form.cross_border_settlement"
-                    :controls="false"
-                    placeholder="请输入"
-                  ></el-input-number >
-                </el-form-item>
-              </el-col>
-            </el-row>
           </el-form>
         </div>
       </div>
@@ -124,15 +91,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第一组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form1FirstDate"
+                      <el-form-item
+                        prop="one.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form1[0].date"
+                          v-model="form1.one.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -142,14 +110,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form1FirstValue"
+                        prop="one.value"
                       >
                         <el-input-number
-                          v-model="form1[0].value"
+                          v-model="form1.one.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -161,15 +129,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第二组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form1SecondDate"
+                      <el-form-item
+                        prop="two.item"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form1[1].date"
+                          v-model="form1.two.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -179,14 +148,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form1SecondValue"
+                        prop="two.value"
                       >
                         <el-input-number
-                          v-model="form1[1].value"
+                          v-model="form1.two.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -198,15 +167,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第三组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form1ThirdDate"
+                      <el-form-item
+                        prop="three.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form1[2].date"
+                          v-model="form1.three.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -216,14 +186,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form1ThirdValue"
+                        prop="three.value"
                       >
                         <el-input-number
-                          v-model="form1[2].value"
+                          v-model="form1.three.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -237,15 +207,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第四组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form1FourchDate"
+                      <el-form-item
+                        prop="four.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form1[3].date"
+                          v-model="form1.four.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -255,14 +226,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form1FourchValue"
+                        prop="four.value"
                       >
                         <el-input-number
-                          v-model="form1[3].value"
+                          v-model="form1.four.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -274,15 +245,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第五组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form1FifthDate"
+                      <el-form-item
+                        prop="five.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form1[4].date"
+                          v-model="form1.five.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -292,14 +264,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form1FifthValue"
+                        prop="five.value"
                       >
                         <el-input-number
-                          v-model="form1[4].value"
+                          v-model="form1.five.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -433,15 +405,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第一组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form3FirstDate"
+                      <el-form-item
+                        prop="one.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form3[0].date"
+                          v-model="form3.one.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -451,14 +424,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form3FirstValue"
+                        prop="one.value"
                       >
                         <el-input-number
-                          v-model="form3[0].value"
+                          v-model="form3.one.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -470,15 +443,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第二组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form3SecondDate"
+                      <el-form-item
+                        prop="two.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form3[1].date"
+                          v-model="form3.two.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -488,14 +462,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form3SecondValue"
+                        prop="two.value"
                       >
                         <el-input-number
-                          v-model="form3[1].value"
+                          v-model="form3.two.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -507,15 +481,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第三组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form3ThirdDate"
+                      <el-form-item
+                        prop="three.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form3[2].date"
+                          v-model="form3.three.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -525,14 +500,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form3ThirdValue"
+                        prop="three.value"
                       >
                         <el-input-number
-                          v-model="form3[2].value"
+                          v-model="form3.three.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -546,15 +521,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第四组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form3FourchDate"
+                      <el-form-item
+                        prop="four.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form3[3].date"
+                          v-model="form3.four.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -564,14 +540,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form3FourchValue"
+                        prop="four.value"
                       >
                         <el-input-number
-                          v-model="form3[3].value"
+                          v-model="form3.four.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -583,15 +559,16 @@
               <el-col :span="8">
                 <el-form-item
                   label="第五组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-from-item
-                        prop="form3FifthDate"
+                      <el-form-item
+                        prop="five.date"
                       >
                         <el-select
                           v-loadmore="loadMore"
-                          v-model="form3[4].date"
+                          v-model="form3.five.date"
                         >
                           <el-option
                             v-for="item of list"
@@ -601,14 +578,14 @@
                           >
                           </el-option>
                         </el-select>
-                      </el-from-item>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
                       <el-form-item
-                        prop="form3FifthValue"
+                        prop="five.value"
                       >
                         <el-input-number
-                          v-model="form3[4].value"
+                          v-model="form3.five.value"
                           :controls="false"
                           placeholder="请输入"
                         ></el-input-number >
@@ -693,7 +670,7 @@
                   prop="imports_exports_total"
                 >
                   <el-input-number
-                    v-model="form.imports_exports_total"
+                    v-model="form5.imports_exports_total"
                     :controls="false"
                     placeholder="请输入"
                   ></el-input-number >
@@ -705,7 +682,7 @@
                   prop="imports_total"
                 >
                   <el-input-number
-                    v-model="form.imports_total"
+                    v-model="form5.imports_total"
                     :controls="false"
                     placeholder="请输入"
                   ></el-input-number >
@@ -719,7 +696,7 @@
                   prop="exports_total"
                 >
                   <el-input-number
-                    v-model="form.exports_total"
+                    v-model="form5.exports_total"
                     :controls="false"
                     placeholder="请输入"
                   ></el-input-number >
@@ -757,8 +734,13 @@
               <el-col :span="8">
                 <el-form-item
                   label="“义新欧”班列开行数（列）)"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="train_lines_num"
+                >
+                  <el-input-number
+                    v-model="form6.train_lines_num"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
             </el-row>
@@ -772,18 +754,46 @@
           <h3 class="title_name">快递业务量（亿件）</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form7"
+            :model="form7"
+            :rules="form7Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
                   label="第一组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-form-item
+                        prop="one.date"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form7.one.date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="one.value"
+                      >
+                        <el-input-number
+                          v-model="form7.one.value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -791,13 +801,37 @@
               <el-col :span="8">
                 <el-form-item
                   label="第二组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-form-item
+                        prop="two.date"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form7.two.date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="two.value"
+                      >
+                        <el-input-number
+                          v-model="form7.two.value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -805,13 +839,37 @@
               <el-col :span="8">
                 <el-form-item
                   label="第三组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-form-item
+                        prop="three.date"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form7.three.date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="three.value"
+                      >
+                        <el-input-number
+                          v-model="form7.three.value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -821,13 +879,37 @@
               <el-col :span="8">
                 <el-form-item
                   label="第四组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-form-item
+                        prop="four.date"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form7.four.date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="four.value"
+                      >
+                        <el-input-number
+                          v-model="form7.four.value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -835,13 +917,37 @@
               <el-col :span="8">
                 <el-form-item
                   label="第五组"
+                  required
                 >
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <el-select></el-select>
+                      <el-form-item
+                        prop="five.date"
+                      >
+                        <el-select
+                          v-loadmore="loadMore"
+                          v-model="form7.five.date"
+                        >
+                          <el-option
+                            v-for="item of list"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                          >
+                          </el-option>
+                        </el-select>
+                      </el-form-item>
                     </el-col>
                     <el-col :span="16">
-                      <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                      <el-form-item
+                        prop="five.value"
+                      >
+                        <el-input-number
+                          v-model="form7.five.value"
+                          :controls="false"
+                          placeholder="请输入"
+                        ></el-input-number >
+                      </el-form-item>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -857,27 +963,46 @@
           <h3 class="title_name">新型国际贸易中心</h3>
         </div>
         <div class="form_main">
-          <el-form>
+          <el-form
+            ref="form8"
+            :model="form8"
+            :rules="form8Rules"
+          >
             <el-row :gutter="70">
               <el-col :span="8">
                 <el-form-item
                   label="eWTP全球布局国家和地区（个)"
+                  prop="ewtp_global_layout_num"
                 >
-                  <el-input-number  :controls="false" placeholder="请输入"></el-input-number >
+                  <el-input-number
+                    v-model="form8.ewtp_global_layout_num"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
                   label="市场采购贸易额（亿元)"
-                  >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                  prop="trade_market_purchases"
+                >
+                  <el-input-number
+                    v-model="form8.trade_market_purchases"
+                    :controls="false"
+                    placeholder="请输入"
+                  ></el-input-number >
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item
-                label="外贸综合服务企业出口额（亿元）"
+                  label="外贸综合服务企业出口额（亿元）"
+                  prop="foreign_trade_exports"
                 >
-                  <el-input-number :controls="false" placeholder="请输入"></el-input-number >
+                <el-input-number
+                  v-model="form8.foreign_trade_exports"
+                  :controls="false"
+                  placeholder="请输入"
+                ></el-input-number >
               </el-form-item>
               </el-col>
             </el-row>
@@ -887,37 +1012,60 @@
     </main>
     <footer class="form_footer">
       <div class="footer_container">
-        <el-button>重置</el-button>
+        <el-button @click="reset">重置</el-button>
         <el-button @click="submit" type="primary">提交</el-button>
       </div>
     </footer>
   </div>
+  <script src="./src/browser.min.js"></script>
+  <script src="./src/es6-promise.min.js"></script>
+  <script>
+    ES6Promise.polyfill()
+  </script>
   <script type="text/babel">
     window.vm = new Vue({
       name: '',
       data() {
+        const dateRules = {required: true, message: '请输入日期', trigger: 'change' }
+        const value1Rules = {required: true, message: '请输入地区生产总值', trigger: 'blur' }
+        const value3Rules = {required: true, message: '请输入跨境人民币结算', trigger: 'blur' }
+        const value7Rules = {required: true, message: '请输入快递业务量', trigger: 'blur' }
+        function getRules(val) {
+          return {required: true, message: "请输入"+val, trigger: 'blur' }
+        }
         return {
           form: {
             regional_gdp:undefined,
             tax_revenue:undefined,
             cross_border_settlement:undefined
           },
-          form1:[
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-          ],
-          form2:{},
-          form3:[
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-            {date: 2015},
-          ],
-          formRules:{
+          form1: {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015},
+          },
+          form2: {},
+          form3: {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015},
+          },
+          form4: {},
+          form5: {},
+          form6: {},
+          form7: {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015},
+          },
+          form8: {},
+          formRules: {
             regional_gdp:[
               {required: true, message: '请输入季度地区生产总值', trigger: 'blur' }
             ],
@@ -928,13 +1076,69 @@
               required: true, message: '请输入跨境人民币结算量', trigger: 'blur' 
             }
           },
-          form1Rules:{
-            form1FirstDate: [
-              {required: true, message: '请输入日期', trigger: 'blur' }
-            ],
-            form1FirstValue: [
-              {required: true, message: '请输入地区生产总值', trigger: 'blur' }
-            ]
+          form1Rules: {
+            "one.date": dateRules,
+            "one.value": value1Rules,
+            "two.date": dateRules,
+            "two.value": value1Rules,
+            "three.date": dateRules,
+            "three.value": value1Rules,
+            "four.date": dateRules,
+            "four.value": value1Rules,
+            "five.date": dateRules,
+            "five.value": value1Rules,
+          },
+          form2Rules: {
+            new_enterprise_num: getRules('新设立企业数'),
+            new_enterprise_domestic_capital: getRules('新增内资企业注册资本'),
+            final_actual_enterprise_domestic_capital: getRules('期末实有企业注册资本'),
+            new_enterprise_num_domestic: getRules('新设立内资企业数'),
+            new_enterprise_num_foreign: getRules('新设立外商企业数'),
+            final_actual_enterprise_num: getRules('期末实有企业数'),
+            final_actual_enterprise_num_domestic: getRules('期末内资企业数'),
+          },
+          form3Rules: {
+            "one.date": dateRules,
+            "one.value": value3Rules,
+            "two.date": dateRules,
+            "two.value": value3Rules,
+            "three.date": dateRules,
+            "three.value": value3Rules,
+            "four.date": dateRules,
+            "four.value": value3Rules,
+            "five.date": dateRules,
+            "five.value": value3Rules,
+          },
+          form4Rules: {
+            rmb_deposit_balance: getRules('人民币存款余额'),
+            rmb_loan_balance: getRules('人民币贷款余额'),
+          },
+          form5Rules: {
+            fixed_asset_investment_increase: getRules('固定资产投资增速'),
+            imports_exports_total: getRules('进出口总额'),
+            imports_total: getRules('进口总额'),
+            exports_total: getRules('出口总额'),
+          },
+          form6Rules: {
+            air_cargo_volume: getRules('航空货物量'),
+            train_lines_num: getRules('“义新欧”班列开行数'),
+          },
+          form7Rules: {
+            "one.date": dateRules,
+            "one.value": value7Rules,
+            "two.date": dateRules,
+            "two.value": value7Rules,
+            "three.date": dateRules,
+            "three.value": value7Rules,
+            "four.date": dateRules,
+            "four.value": value7Rules,
+            "five.date": dateRules,
+            "five.value": value7Rules,
+          },
+          form8Rules: {
+            ewtp_global_layout_num: getRules('eWTP全球布局国家和地区'),
+            trade_market_purchases: getRules('市场采购贸易额'),
+            foreign_trade_exports: getRules('外贸综合服务企业出口额'),
           },
           list: [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
         }
@@ -951,25 +1155,98 @@
             this.list.push(i)
           }
         },
+        // 初始化form1,form3,form7
+        initSelect() {
+          this.form1 = {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015}
+          }
+          this.form3 = {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015}
+          }
+          this.form7 = {
+            one:{date: 2015},
+            two:{date: 2015},
+            three:{date: 2015},
+            four:{date: 2015},
+            five:{date: 2015}
+          }
+        },
+        // 重置
+        reset() {
+          for(var i=0; i<9; i++) {
+            let key = 'form' + (i || '');
+            this[key] = {};
+            this.$refs[key].resetFields();
+            this.initSelect()
+          }
+        },
+        getValues(form) {
+          let arr = [];
+          for(var i in form) {
+            arr.push(form[i])
+          }
+          return arr;
+        },
+        // 整理入参
+        sendInfo() {
+          let param = {
+            ...this.form,
+            ...this.form2,
+            ...this.form4,
+            ...this.form5,
+            ...this.form6,
+            ...this.form8,
+          }
+          param.gdp =this.getValues(this.form1);
+          param.settlement = this.getValues(this.form3);
+          param.express = this.getValues(this.form7);
+          console.log(param)
+          return param;
+        },
         // 提交
         submit() {
-          this.$refs.form.validate((val) => {
-            if(val) {
-              // 通过
-            } else {
-
-            }
-          })
-          this.$refs.form1.validate(val => {
-            if(val) {
-            } else {
-
-            }
-          })
-        }
+          let flag = true;
+          for(var i=0; i<9; i++) {
+            let key = 'form' + (i || '');
+            this.$refs[key].validate(val => {
+              if(!val) {
+                flag = false
+              }
+            })
+          }
+          if(flag) {
+            let params = this.sendInfo();
+            // 调接口
+            let url= 'http://localhost:8080/test'
+            axios.get(url, {
+                params: {
+                  name:"测试时啊测试撒"
+                }
+            }).then(val => {
+              this.$message({
+                type: "success",
+                message: '提交成功'
+              })
+              this.reset();
+            }).catch(err => {
+              console.log(err)
+              this.$message({
+                type: "error",
+                message: err
+              })
+            })
+          }
+        },
       }
     }).$mount("#app")
   </script>
-  <script src="./browser.min.js"></script>
 </body>
 </html>
